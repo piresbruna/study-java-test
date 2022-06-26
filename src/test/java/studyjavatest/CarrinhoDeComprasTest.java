@@ -10,7 +10,7 @@ class CarrinhoDeComprasTest {
     private CarrinhoDeCompras carrinhoDeCompras = new CarrinhoDeCompras();
 
     @Test
-    void addItem_AddItemToListAndSumValueUpToAHundred_WhenSuccessful() {
+    void addItem_AddItem() {
         Item item1 = new Item("Batata", 5.50);
         Item item2 = new Item("Arroz", 10.20);
 
@@ -20,7 +20,6 @@ class CarrinhoDeComprasTest {
         assertNotNull(carrinhoDeCompras.getItens());
         assertEquals(item1,carrinhoDeCompras.getItens().get(0));
         assertEquals(item2,carrinhoDeCompras.getItens().get(1));
-        assertEquals((item1.getValor() + item2.getValor()), carrinhoDeCompras.getTotalValor());
         assertDoesNotThrow(() -> {
             carrinhoDeCompras.addItem(item1);
             carrinhoDeCompras.addItem(item2);
@@ -28,7 +27,7 @@ class CarrinhoDeComprasTest {
     }
 
     @Test
-    void addItem_AddItemToListAndSumValueUpOverAHundred_ThenThrowException_WhenSuccessful() {
+    void addItem_AddItemThrowException() {
         Item item1 = new Item("Batata", 5.50);
         Item item2 = new Item("Liquidificador", 99.20);
 
@@ -40,32 +39,35 @@ class CarrinhoDeComprasTest {
 
     @Test
     void getTotalValor() {
-    }
-
-    @Test
-    void getPossibilidadeDeCompra_ReturnsHowMuchCanStillBeSpend_WhenSuccessful() {
         Item item1 = new Item("Batata", 5.50);
         Item item2 = new Item("Arroz", 10.20);
+        double expectedSum = item1.getValor() + item2.getValor();
 
         carrinhoDeCompras.addItem(item1);
         carrinhoDeCompras.addItem(item2);
 
-        double epectedValue = 100 - (item1.getValor() + item2.getValor());
+        assertEquals(expectedSum, carrinhoDeCompras.getTotalValor());
+    }
+
+    @Test
+    void getPossibilidadeDeCompra() {
+        Item item1 = new Item("Batata", 5.50);
+
+        carrinhoDeCompras.addItem(item1);
+
+        double epectedValue = 100 - item1.getValor();
 
         assertEquals(epectedValue, carrinhoDeCompras.getPossibilidadeDeCompra());
     }
 
     @Test
-    void getItens_ReturnsListOfITems_WhenSuccessful() {
+    void getItens() {
         Item item1 = new Item("Batata", 5.50);
-        Item item2 = new Item("Arroz", 10.20);
 
-        ArrayList<Item> itens = new ArrayList<>();
+        ArrayList<Item> itens = new ArrayList<Item>();
         itens.add(item1);
-        itens.add(item2);
 
         carrinhoDeCompras.addItem(item1);
-        carrinhoDeCompras.addItem(item2);
 
         assertNotNull(carrinhoDeCompras.getItens());
         assertEquals(itens,carrinhoDeCompras.getItens());
